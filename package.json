@@ -43,23 +43,17 @@
         "coveralls": "3.1.1",
         "nyc": "^15.1.0",
         "ts-node": "^10.9.2",
+        "tsx": "^4.10.5",
         "typedoc": "^0.25.13",
         "typescript": "^5.4.5"
     },
     "scripts": {
         "gh-pages-build": "npm install && npm run typedoc --options typedoc.json",
         "typedoc": "rm -rf ./docs/api; typedoc --tsconfig tsconfig.json --out docs/api index.ts",
-        "clean": "rm -rf ./.test_run; rm -rf ./.nyc_output; rm -rf ./docs/coverage; rm -rf ./dist; npm run clean-test; rm -rf docs/api",
-        "clean-test": "rm -rf ./test/bundle ./test/node_modules ./test/tmp",
-        "test:run": "mocha --config .mocharc.js",
-        "test": "npm run test:run",
-        "compile": "tsc",
-        "build": "npm run compile",
+        "test": "tsx bin/test.ts",
+        "build": "tsc",
         "report": "nyc report",
-        "coverage": "nyc npm run test:run",
-        "prebuild": "npm run clean",
-        "pretest": "npm run build",
-        "prepublishOnly": "npm run build && npm run lint"
+        "coverage": "nyc pnpm test"
     },
     "files": [
         "dist"
