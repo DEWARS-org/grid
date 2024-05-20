@@ -1,9 +1,9 @@
-import { Point as MilPoint } from '@ngageoint/simple-features-js';
-import { GridUtils } from '../GridUtils';
-import { GridTile } from '../tile/GridTile';
-import { Pixel } from '../tile/Pixel';
-import { Bounds } from './Bounds';
-import { Unit } from './Unit';
+import { Point as MilPoint } from "@ngageoint/simple-features-js";
+import { GridUtils } from "../GridUtils.js";
+import type { GridTile } from "../tile/GridTile.js";
+import type { Pixel } from "../tile/Pixel.js";
+import type { Bounds } from "./Bounds.js";
+import { Unit } from "./Unit.js";
 
 /**
  * Point
@@ -12,17 +12,14 @@ export class Point extends MilPoint {
   /**
    * Unit
    */
-  private unit?: Unit = Unit.DEGREE;
+  private unit?: Unit = Unit.Degree;
 
   /**
    * Create a point
    *
-   * @param longitude
-   *            longitude
-   * @param latitude
-   *            latitude
-   * @param unit
-   *            unit; if null, it will use the default degree unit
+   * @param longitude longitude
+   * @param latitude latitude
+   * @param unit unit; if null, it will use the default degree unit
    * @return point
    */
   public static point(longitude: number, latitude: number, unit?: Unit): Point {
@@ -31,7 +28,7 @@ export class Point extends MilPoint {
       point = new Point(longitude, latitude);
       point.unit = unit;
     } else {
-      point = this.degrees(longitude, latitude);
+      point = Point.degrees(longitude, latitude);
     }
     return point;
   }
@@ -39,94 +36,86 @@ export class Point extends MilPoint {
   /**
    * Create a point in degrees
    *
-   * @param longitude
-   *            longitude in degrees
-   * @param latitude
-   *            latitude in degrees
+   * @param longitude longitude in degrees
+   * @param latitude latitude in degrees
    * @return point in degrees
    */
   public static degrees(longitude: number, latitude: number): Point {
-    return Point.point(longitude, latitude, Unit.DEGREE);
+    return Point.point(longitude, latitude, Unit.Degree);
   }
 
   /**
    * Create a point in meters
    *
-   * @param longitude
-   *            longitude in meters
-   * @param latitude
-   *            latitude in meters
+   * @param longitude longitude in meters
+   * @param latitude latitude in meters
    * @return point in meters
    */
   public static meters(longitude: number, latitude: number): Point {
-    return Point.point(longitude, latitude, Unit.METER);
+    return Point.point(longitude, latitude, Unit.Meter);
   }
 
   /**
    * Create a point from a coordinate in a unit to another unit
    *
-   * @param fromUnit
-   *            unit of provided coordinate
-   * @param longitude
-   *            longitude
-   * @param latitude
-   *            latitude
-   * @param toUnit
-   *            desired unit
+   * @param fromUnit unit of provided coordinate
+   * @param longitude longitude
+   * @param latitude latitude
+   * @param toUnit desired unit
    * @return point in unit
    */
-  public static toUnit(fromUnit: Unit, longitude: number, latitude: number, toUnit: Unit): Point {
+  public static toUnit(
+    fromUnit: Unit,
+    longitude: number,
+    latitude: number,
+    toUnit: Unit,
+  ): Point {
     return GridUtils.toUnit(fromUnit, longitude, latitude, toUnit);
   }
 
   /**
    * Create a point from a coordinate in an opposite unit to another unit
    *
-   * @param longitude
-   *            longitude
-   * @param latitude
-   *            latitude
-   * @param unit
-   *            desired unit
+   * @param longitude longitude
+   * @param latitude latitude
+   * @param unit desired unit
    * @return point in unit
    */
-  public static toUnitInverse(longitude: number, latitude: number, unit: Unit): Point {
+  public static toUnitInverse(
+    longitude: number,
+    latitude: number,
+    unit: Unit,
+  ): Point {
     return GridUtils.toUnitOpposite(longitude, latitude, unit);
   }
 
   /**
    * Create a point converting the degrees coordinate to meters
    *
-   * @param longitude
-   *            longitude in degrees
-   * @param latitude
-   *            latitude in degrees
+   * @param longitude longitude in degrees
+   * @param latitude latitude in degrees
    * @return point in meters
    */
   public static degreesToMeters(longitude: number, latitude: number): Point {
-    return Point.toUnit(Unit.DEGREE, longitude, latitude, Unit.METER);
+    return Point.toUnit(Unit.Degree, longitude, latitude, Unit.Meter);
   }
 
   /**
    * Create a point converting the meters coordinate to degrees
    *
-   * @param longitude
-   *            longitude in meters
-   * @param latitude
-   *            latitude in meters
+   * @param longitude longitude in meters
+   * @param latitude latitude in meters
    * @return point in degrees
    */
   public static metersToDegrees(longitude: number, latitude: number): Point {
-    return Point.toUnit(Unit.METER, longitude, latitude, Unit.DEGREE);
+    return Point.toUnit(Unit.Meter, longitude, latitude, Unit.Degree);
   }
 
   /**
    * Create a point
    *
-   * @param point
-   *            point to copy
-   * @param unit
-   *            unit
+   * @param point point to copy
+   * @param unit unit
    * @return point
    */
   public static pointFromPoint(point: MilPoint, unit?: Unit): Point {
@@ -147,8 +136,7 @@ export class Point extends MilPoint {
   /**
    * Set the longitude
    *
-   * @param longitude
-   *            longitude
+   * @param longitude longitude
    */
   public setLongitude(longitude: number): void {
     this.x = longitude;
@@ -166,8 +154,7 @@ export class Point extends MilPoint {
   /**
    * Set the latitude
    *
-   * @param latitude
-   *            latitude
+   * @param latitude latitude
    */
   public setLatitude(latitude: number): void {
     this.y = latitude;
@@ -185,8 +172,7 @@ export class Point extends MilPoint {
   /**
    * Set the unit
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    */
   public setUnit(unit?: Unit): void {
     this.unit = unit;
@@ -195,8 +181,7 @@ export class Point extends MilPoint {
   /**
    * Is in the provided unit type
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    * @return true if in the unit
    */
   public isUnit(unit?: Unit): boolean {
@@ -209,7 +194,7 @@ export class Point extends MilPoint {
    * @return true if degrees
    */
   public isDegrees(): boolean {
-    return this.isUnit(Unit.DEGREE);
+    return this.isUnit(Unit.Degree);
   }
 
   /**
@@ -218,14 +203,13 @@ export class Point extends MilPoint {
    * @return true if meters
    */
   public isMeters(): boolean {
-    return this.isUnit(Unit.METER);
+    return this.isUnit(Unit.Meter);
   }
 
   /**
    * Convert to the unit
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    * @return point in units, same point if equal units
    */
   public toUnit(unit: Unit): Point {
@@ -233,7 +217,12 @@ export class Point extends MilPoint {
     if (this.isUnit(unit)) {
       newPoint = this;
     } else {
-      newPoint = GridUtils.toUnit(this.unit!, this.getLongitude(), this.getLatitude(), unit);
+      newPoint = GridUtils.toUnit(
+        this.unit,
+        this.getLongitude(),
+        this.getLatitude(),
+        unit,
+      );
     }
     return newPoint;
   }
@@ -244,7 +233,7 @@ export class Point extends MilPoint {
    * @return point in degrees, same point if already in degrees
    */
   public toDegrees(): Point {
-    return this.toUnit(Unit.DEGREE);
+    return this.toUnit(Unit.Degree);
   }
 
   /**
@@ -253,29 +242,29 @@ export class Point extends MilPoint {
    * @return point in meters, same point if already in meters
    */
   public toMeters(): Point {
-    return this.toUnit(Unit.METER);
+    return this.toUnit(Unit.Meter);
   }
 
   /**
    * Get the pixel where the point fits into tile
    *
-   * @param tile
-   *            tile
+   * @param tile tile
    * @return pixel
    */
   public getPixelFromTile(tile: GridTile): Pixel {
-    return this.getPixel(tile.getWidth(), tile.getHeight(), tile.getBounds()!);
+    const bounds = tile.getBounds();
+    if (!bounds) {
+      throw new Error("Bounds is not set");
+    }
+    return this.getPixel(tile.getWidth(), tile.getHeight(), bounds);
   }
 
   /**
    * Get the pixel where the point fits into the bounds
    *
-   * @param width
-   *            width
-   * @param height
-   *            height
-   * @param bounds
-   *            bounds
+   * @param width width
+   * @param height height
+   * @param bounds bounds
    * @return pixel
    */
   public getPixel(width: number, height: number, bounds: Bounds): Pixel {
@@ -297,11 +286,19 @@ export class Point extends MilPoint {
    * {@inheritDoc}
    */
   public equals(other: Point): boolean {
-    if (this === other) return true;
-    if (!super.equals(other)) return false;
-    if (!(other instanceof Point)) return false;
+    if (this === other) {
+      return true;
+    }
+    if (!super.equals(other)) {
+      return false;
+    }
+    if (!(other instanceof Point)) {
+      return false;
+    }
 
-    if (this.unit !== other.getUnit()) return false;
+    if (this.unit !== other.getUnit()) {
+      return false;
+    }
     return true;
   }
 }

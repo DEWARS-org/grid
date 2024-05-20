@@ -1,5 +1,5 @@
-import { Bounds } from './features/Bounds';
-import { Point } from './features/Point';
+import type { Bounds } from "./features/Bounds.js";
+import type { Point } from "./features/Point.js";
 
 /**
  * Grid Label
@@ -23,12 +23,9 @@ export class Label {
   /**
    * Constructor
    *
-   * @param name
-   *            name
-   * @param center
-   *            center point
-   * @param bounds
-   *            bounds
+   * @param name name
+   * @param center center point
+   * @param bounds bounds
    */
   constructor(name: string, center: Point, bounds: Bounds) {
     this.name = name;
@@ -48,8 +45,7 @@ export class Label {
   /**
    * Set the name
    *
-   * @param name
-   *            name
+   * @param name name
    */
   public setName(name?: string): void {
     this.name = name;
@@ -67,8 +63,7 @@ export class Label {
   /**
    * Set the center point
    *
-   * @param center
-   *            center point
+   * @param center center point
    */
   public setCenter(center?: Point): void {
     this.center = center;
@@ -86,8 +81,7 @@ export class Label {
   /**
    * Set the bounds
    *
-   * @param bounds
-   *            bounds
+   * @param bounds bounds
    */
   public setBounds(bounds?: Bounds): void {
     this.bounds = bounds;

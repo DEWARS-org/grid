@@ -1,4 +1,4 @@
-import { Pixel } from './Pixel';
+import type { Pixel } from "./Pixel.js";
 
 /**
  * Pixel Range
@@ -17,10 +17,8 @@ export class PixelRange {
   /**
    * Constructor
    *
-   * @param topLeft
-   *            top left pixel
-   * @param bottomRight
-   *            bottom right pixel
+   * @param topLeft top left pixel
+   * @param bottomRight bottom right pixel
    */
   public constructor(topLeft: Pixel, bottomRight: Pixel) {
     this.topLeft = topLeft;
@@ -39,8 +37,7 @@ export class PixelRange {
   /**
    * Set the top left pixel
    *
-   * @param topLeft
-   *            top left pixel
+   * @param topLeft top left pixel
    */
   public setTopLeft(topLeft: Pixel): void {
     this.topLeft = topLeft;
@@ -58,8 +55,7 @@ export class PixelRange {
   /**
    * Set the bottom right pixel
    *
-   * @param bottomRight
-   *            bottom right pixel
+   * @param bottomRight bottom right pixel
    */
   public setBottomRight(bottomRight: Pixel): void {
     this.bottomRight = bottomRight;

@@ -5,10 +5,10 @@ export enum Unit {
   /**
    * Degrees
    */
-  DEGREE,
+  Degree = 0,
 
   /**
    * Meters
    */
-  METER,
+  Meter = 1,
 }

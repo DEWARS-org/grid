@@ -1,6 +1,6 @@
-import { Color } from '@ngageoint/color-js/';
-import { GridStyle } from './GridStyle';
-import { Labeler } from './Labeler';
+import type { Color } from "@ngageoint/color-js/";
+import { GridStyle } from "./GridStyle.js";
+import type { Labeler } from "./Labeler.js";
 
 /**
  * Base Grid
@@ -9,12 +9,12 @@ export class BaseGrid {
   /**
    * Enabled grid
    */
-  private enabled: boolean = false;
+  private enabled = false;
 
   /**
    * Minimum zoom level
    */
-  private minZoom: number = 0;
+  private minZoom = 0;
 
   /**
    * Maximum zoom level
@@ -53,8 +53,7 @@ export class BaseGrid {
   /**
    * Set the enabled flag
    *
-   * @param enabled
-   *            enabled flag
+   * @param enabled enabled flag
    */
   public setEnabled(enabled: boolean): void {
     this.enabled = enabled;
@@ -72,8 +71,7 @@ export class BaseGrid {
   /**
    * Set the minimum zoom level
    *
-   * @param minZoom
-   *            minimum zoom level
+   * @param minZoom minimum zoom level
    */
   public setMinZoom(minZoom: number): void {
     this.minZoom = minZoom;
@@ -100,8 +98,7 @@ export class BaseGrid {
   /**
    * Set the maximum zoom level
    *
-   * @param maxZoom
-   *            maximum zoom level
+   * @param maxZoom maximum zoom level
    */
   public setMaxZoom(maxZoom?: number): void {
     this.maxZoom = maxZoom;
@@ -110,12 +107,14 @@ export class BaseGrid {
   /**
    * Is the zoom level within the grid zoom range
    *
-   * @param zoom
-   *            zoom level
+   * @param zoom zoom level
    * @return true if within range
    */
   public isWithin(zoom: number): boolean {
-    return zoom >= this.minZoom && (this.maxZoom === undefined || zoom <= this.maxZoom);
+    return (
+      zoom >= this.minZoom &&
+      (this.maxZoom === undefined || zoom <= this.maxZoom)
+    );
   }
 
   /**
@@ -124,7 +123,9 @@ export class BaseGrid {
    * @return minimum zoom level
    */
   public getLinesMinZoom(): number {
-    return this.linesMinZoom !== undefined ? this.linesMinZoom : this.getMinZoom();
+    return this.linesMinZoom !== undefined
+      ? this.linesMinZoom
+      : this.getMinZoom();
   }
 
   /**
@@ -139,8 +140,7 @@ export class BaseGrid {
   /**
    * Set the minimum level override for drawing grid lines
    *
-   * @param linesMinZoom
-   *            minimum zoom level or undefined to remove
+   * @param linesMinZoom minimum zoom level or undefined to remove
    */
   public setLinesMinZoom(linesMinZoom?: number): void {
     this.linesMinZoom = linesMinZoom;
@@ -152,7 +152,9 @@ export class BaseGrid {
    * @return maximum zoom level
    */
   public getLinesMaxZoom(): number | undefined {
-    return this.linesMaxZoom !== undefined ? this.linesMaxZoom : this.getMaxZoom();
+    return this.linesMaxZoom !== undefined
+      ? this.linesMaxZoom
+      : this.getMaxZoom();
   }
 
   /**
@@ -167,8 +169,7 @@ export class BaseGrid {
   /**
    * Set the maximum level override for drawing grid lines
    *
-   * @param linesMaxZoom
-   *            maximum zoom level or undefined to remove
+   * @param linesMaxZoom maximum zoom level or undefined to remove
    */
   public setLinesMaxZoom(linesMaxZoom?: number): void {
     this.linesMaxZoom = linesMaxZoom;
@@ -177,16 +178,19 @@ export class BaseGrid {
   /**
    * Is the zoom level within the grid lines zoom range
    *
-   * @param zoom
-   *            zoom level
+   * @param zoom zoom level
    * @return true if within range
    */
   public isLinesWithin(zoom: number): boolean {
     let isWithin = true;
     if (this.linesMinZoom !== null && this.linesMinZoom !== undefined) {
-      isWithin = zoom >= this.linesMinZoom!;
+      isWithin = zoom >= this.linesMinZoom;
     }
-    if (isWithin && this.linesMaxZoom !== null && this.linesMaxZoom !== undefined) {
+    if (
+      isWithin &&
+      this.linesMaxZoom !== null &&
+      this.linesMaxZoom !== undefined
+    ) {
       isWithin = zoom <= this.linesMaxZoom;
     }
     return isWithin;
@@ -204,8 +208,7 @@ export class BaseGrid {
   /**
    * Set the grid line style
    *
-   * @param style
-   *            grid line style
+   * @param style grid line style
    */
   public setStyle(style?: GridStyle): void {
     this.style = style !== undefined ? style : new GridStyle(undefined, 0);
@@ -223,8 +226,7 @@ export class BaseGrid {
   /**
    * Set the grid line color
    *
-   * @param color
-   *            grid line color
+   * @param color grid line color
    */
   public setColor(color?: Color): void {
     this.getStyle().setColor(color);
@@ -242,8 +244,7 @@ export class BaseGrid {
   /**
    * Set the grid line width
    *
-   * @param width
-   *            grid line width
+   * @param width grid line width
    */
   public setWidth(width: number): void {
     this.getStyle().setWidth(width);
@@ -270,8 +271,7 @@ export class BaseGrid {
   /**
    * Set the grid labeler
    *
-   * @param labeler
-   *            grid labeler
+   * @param labeler grid labeler
    */
   public setLabeler(labeler?: Labeler): void {
     this.labeler = labeler;
@@ -280,12 +280,19 @@ export class BaseGrid {
   /**
    * Is labeler zoom level within the grid zoom range
    *
-   * @param zoom
-   *            zoom level
+   * @param zoom zoom level
    * @return true if within range
    */
   public isLabelerWithin(zoom: number): boolean {
-    return this.hasLabeler() && this.labeler!.isEnabled() && this.labeler!.isWithin(zoom);
+    if (!this.labeler) {
+      throw new Error("Labeler is not set");
+    }
+
+    return (
+      this.hasLabeler() &&
+      this.labeler.isEnabled() &&
+      this.labeler.isWithin(zoom)
+    );
   }
 
   /**
@@ -294,6 +301,10 @@ export class BaseGrid {
    * @return label buffer (greater than or equal to 0.0 and less than 0.5)
    */
   public getLabelBuffer(): number {
-    return this.hasLabeler() ? this.labeler!.getBuffer() : 0.0;
+    if (!this.labeler) {
+      throw new Error("Labeler is not set");
+    }
+
+    return this.hasLabeler() ? this.labeler.getBuffer() : 0.0;
   }
 }

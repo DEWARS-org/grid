@@ -1,4 +1,4 @@
-import { Color } from '@ngageoint/color-js/';
+import type { Color } from "@ngageoint/color-js/";
 
 /**
  * Grid Labeler
@@ -7,12 +7,12 @@ export abstract class Labeler {
   /**
    * Enabled labeler
    */
-  private enabled: boolean = false;
+  private enabled = false;
 
   /**
    * Minimum zoom level
    */
-  private minZoom: number = 0;
+  private minZoom = 0;
 
   /**
    * Maximum zoom level
@@ -27,29 +27,22 @@ export abstract class Labeler {
   /**
    * Label text size
    */
-  private textSize: number = 0;
+  private textSize = 0;
 
   /**
    * Grid edge buffer (greater than or equal to 0.0 and less than 0.5)
    */
-  private buffer: number = 0;
+  private buffer = 0;
 
   /**
    * Constructor
    *
-   * @param enabled
-   *            enabled labeler
-   * @param minZoom
-   *            minimum zoom
-   * @param maxZoom
-   *            maximum zoom
-   * @param color
-   *            label color
-   * @param textSize
-   *            label text size
-   * @param buffer
-   *            grid edge buffer (greater than or equal to 0.0 and less than
-   *            0.5)
+   * @param enabled enabled labeler
+   * @param minZoom minimum zoom
+   * @param maxZoom maximum zoom
+   * @param color label color
+   * @param textSize label text size
+   * @param buffer grid edge buffer (greater than or equal to 0.0 and less than 0.5)
    */
   constructor(
     enabled: boolean,
@@ -79,8 +72,7 @@ export abstract class Labeler {
   /**
    * Set the enabled flag
    *
-   * @param enabled
-   *            enabled flag
+   * @param enabled enabled flag
    */
   public setEnabled(enabled: boolean) {
     this.enabled = enabled;
@@ -98,8 +90,7 @@ export abstract class Labeler {
   /**
    * Set the minimum zoom level
    *
-   * @param minZoom
-   *            minimum zoom level
+   * @param minZoom minimum zoom level
    */
   public setMinZoom(minZoom: number): void {
     this.minZoom = minZoom;
@@ -126,8 +117,7 @@ export abstract class Labeler {
   /**
    * Set the maximum zoom level
    *
-   * @param maxZoom
-   *            maximum zoom level
+   * @param maxZoom maximum zoom level
    */
   public setMaxZoom(maxZoom?: number): void {
     this.maxZoom = maxZoom;
@@ -136,12 +126,16 @@ export abstract class Labeler {
   /**
    * Is the zoom level within the grid zoom range
    *
-   * @param zoom
-   *            zoom level
+   * @param zoom zoom level
    * @return true if within range
    */
   public isWithin(zoom: number): boolean {
-    return zoom >= this.minZoom && (this.maxZoom === undefined || this.maxZoom === null || zoom <= this.maxZoom);
+    return (
+      zoom >= this.minZoom &&
+      (this.maxZoom === undefined ||
+        this.maxZoom === null ||
+        zoom <= this.maxZoom)
+    );
   }
 
   /**
@@ -156,8 +150,7 @@ export abstract class Labeler {
   /**
    * Set the label color
    *
-   * @param color
-   *            label color
+   * @param color label color
    */
   public setColor(color?: Color): void {
     this.color = color;
@@ -175,8 +168,7 @@ export abstract class Labeler {
   /**
    * Set the label text size
    *
-   * @param textSize
-   *            label text size
+   * @param textSize label text size
    */
   public setTextSize(textSize: number): void {
     this.textSize = textSize;
@@ -194,12 +186,13 @@ export abstract class Labeler {
   /**
    * Set the grid edge buffer
    *
-   * @param buffer
-   *            buffer (greater than or equal to 0.0 and less than 0.5)
+   * @param buffer buffer (greater than or equal to 0.0 and less than 0.5)
    */
   public setBuffer(buffer: number): void {
     if (buffer < 0.0 || buffer >= 0.5) {
-      throw new Error('Grid edge buffer must be >= 0 and < 0.5. buffer: ' + buffer);
+      throw new Error(
+        `Grid edge buffer must be >= 0 and < 0.5. buffer: ${buffer}`,
+      );
     }
     this.buffer = buffer;
   }

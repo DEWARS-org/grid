@@ -20,7 +20,7 @@ test.group("Line Tests", () => {
     expect(line).not.toBeUndefined;
 
     const metersLine = line.toMeters();
-    expect(metersLine.getPoint1().getUnit()).toEqual(Unit.METER);
-    expect(metersLine.getPoint2().getUnit()).toEqual(Unit.METER);
+    expect(metersLine.getPoint1().getUnit()).toEqual(Unit.Meter);
+    expect(metersLine.getPoint2().getUnit()).toEqual(Unit.Meter);
   });
 });

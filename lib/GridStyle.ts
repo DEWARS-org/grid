@@ -1,4 +1,4 @@
-import { Color } from '@ngageoint/color-js';
+import type { Color } from "@ngageoint/color-js";
 
 /**
  * Grid Line Style
@@ -12,15 +12,13 @@ export class GridStyle {
   /**
    * Grid line width
    */
-  private width: number = 0;
+  private width = 0;
 
   /**
    * Create a new style
    *
-   * @param color
-   *            color
-   * @param width
-   *            width
+   * @param color color
+   * @param width width
    * @return style
    */
   public static style(color: Color | undefined, width: number): GridStyle {
@@ -30,10 +28,8 @@ export class GridStyle {
   /**
    * Constructor
    *
-   * @param color
-   *            color
-   * @param width
-   *            width
+   * @param color color
+   * @param width width
    */
   constructor(color: Color | undefined, width: number) {
     this.color = color;
@@ -52,8 +48,7 @@ export class GridStyle {
   /**
    * Set the grid line color
    *
-   * @param color
-   *            grid line color
+   * @param color grid line color
    */
   public setColor(color?: Color): void {
     this.color = color;
@@ -71,8 +66,7 @@ export class GridStyle {
   /**
    * Set the grid line width
    *
-   * @param width
-   *            grid line width
+   * @param width grid line width
    */
   public setWidth(width: number): void {
     this.width = width;

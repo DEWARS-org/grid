@@ -1,10 +1,10 @@
-import { GeometryEnvelope } from '@ngageoint/simple-features-js';
-import { Unit } from './Unit';
-import { Point } from './Point';
-import { Line } from './Line';
-import { GridUtils } from '../GridUtils';
-import { GridTile } from '../tile/GridTile';
-import { PixelRange } from '../tile/PixelRange';
+import { GeometryEnvelope } from "@ngageoint/simple-features-js";
+import { GridUtils } from "../GridUtils.js";
+import type { GridTile } from "../tile/GridTile.js";
+import { PixelRange } from "../tile/PixelRange.js";
+import { Line } from "./Line.js";
+import { Point } from "./Point.js";
+import { Unit } from "./Unit.js";
 
 /**
  * Grid Bounds
@@ -13,21 +13,16 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Unit
    */
-  private unit?: Unit = Unit.DEGREE;
+  private unit?: Unit = Unit.Degree;
 
   /**
    * Create bounds
    *
-   * @param minLongitude
-   *            min longitude
-   * @param minLatitude
-   *            min latitude
-   * @param maxLongitude
-   *            max longitude
-   * @param maxLatitude
-   *            max latitude
-   * @param unit
-   *            unit
+   * @param minLongitude min longitude
+   * @param minLatitude min latitude
+   * @param maxLongitude max longitude
+   * @param maxLatitude max latitude
+   * @param unit unit
    * @return bounds
    */
   public static bounds(
@@ -37,7 +32,12 @@ export class Bounds extends GeometryEnvelope {
     maxLatitude: number,
     unit: Unit,
   ): Bounds {
-    const bounds = new Bounds(minLongitude, minLatitude, maxLongitude, maxLatitude);
+    const bounds = new Bounds(
+      minLongitude,
+      minLatitude,
+      maxLongitude,
+      maxLatitude,
+    );
     bounds.unit = unit;
     return bounds;
   }
@@ -45,44 +45,56 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Create bounds in degrees
    *
-   * @param minLongitude
-   *            min longitude
-   * @param minLatitude
-   *            min latitude
-   * @param maxLongitude
-   *            max longitude
-   * @param maxLatitude
-   *            max latitude
+   * @param minLongitude min longitude
+   * @param minLatitude min latitude
+   * @param maxLongitude max longitude
+   * @param maxLatitude max latitude
    * @return bounds
    */
-  public static degrees(minLongitude: number, minLatitude: number, maxLongitude: number, maxLatitude: number): Bounds {
-    return this.bounds(minLongitude, minLatitude, maxLongitude, maxLatitude, Unit.DEGREE);
+  public static degrees(
+    minLongitude: number,
+    minLatitude: number,
+    maxLongitude: number,
+    maxLatitude: number,
+  ): Bounds {
+    return Bounds.bounds(
+      minLongitude,
+      minLatitude,
+      maxLongitude,
+      maxLatitude,
+      Unit.Degree,
+    );
   }
 
   /**
    * Create bounds in meters
    *
-   * @param minLongitude
-   *            min longitude
-   * @param minLatitude
-   *            min latitude
-   * @param maxLongitude
-   *            max longitude
-   * @param maxLatitude
-   *            max latitude
+   * @param minLongitude min longitude
+   * @param minLatitude min latitude
+   * @param maxLongitude max longitude
+   * @param maxLatitude max latitude
    * @return bounds
    */
-  public static meters(minLongitude: number, minLatitude: number, maxLongitude: number, maxLatitude: number): Bounds {
-    return this.bounds(minLongitude, minLatitude, maxLongitude, maxLatitude, Unit.METER);
+  public static meters(
+    minLongitude: number,
+    minLatitude: number,
+    maxLongitude: number,
+    maxLatitude: number,
+  ): Bounds {
+    return Bounds.bounds(
+      minLongitude,
+      minLatitude,
+      maxLongitude,
+      maxLatitude,
+      Unit.Meter,
+    );
   }
 
   /**
    * Create bounds
    *
-   * @param southwest
-   *            southwest corner
-   * @param northeast
-   *            northeast corner
+   * @param southwest southwest corner
+   * @param northeast northeast corner
    * @return bounds
    */
   public static boundsFromCorners(southwest: Point, northeast: Point): Bounds {
@@ -95,9 +107,17 @@ export class Bounds extends GeometryEnvelope {
 
     bounds.unit = southwest.getUnit();
 
-    if (!bounds.isUnit(northeast.getUnit()!)) {
+    const northeastUnit = northeast.getUnit();
+
+    if (!northeastUnit) {
+      throw new Error("Northeast unit is undefined");
+    }
+
+    if (!bounds.isUnit(northeastUnit)) {
       throw new Error(
-        'Points are in different units. southwest: ' + bounds.unit + ', northeast: ' + northeast.getUnit(),
+        `Points are in different units. southwest: ${
+          bounds.unit
+        }, northeast: ${northeast.getUnit()}`,
       );
     }
 
@@ -107,8 +127,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Copy bounds
    *
-   * @param bounds
-   *            bounds to copy
+   * @param bounds bounds to copy
    * @return bounds
    */
   public static boundsFromBounds(bounds: Bounds): Bounds {
@@ -118,13 +137,14 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Create bounds
    *
-   * @param envelope
-   *            geometry envelope
-   * @param unit
-   *            unit
+   * @param envelope geometry envelope
+   * @param unit unit
    * @return bounds
    */
-  public static boundsFromEnvelope(envelope: GeometryEnvelope, unit?: Unit): Bounds {
+  public static boundsFromEnvelope(
+    envelope: GeometryEnvelope,
+    unit?: Unit,
+  ): Bounds {
     const bounds = new Bounds(envelope);
     bounds.unit = unit;
     return bounds;
@@ -142,8 +162,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the min longitude
    *
-   * @param minLongitude
-   *            min longitude
+   * @param minLongitude min longitude
    */
   public setMinLongitude(minLongitude: number): void {
     this.minX = minLongitude;
@@ -161,8 +180,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the min latitude
    *
-   * @param minLatitude
-   *            min latitude
+   * @param minLatitude min latitude
    */
   public setMinLatitude(minLatitude: number): void {
     this.minY = minLatitude;
@@ -180,8 +198,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the max longitude
    *
-   * @param maxLongitude
-   *            max longitude
+   * @param maxLongitude max longitude
    */
   public setMaxLongitude(maxLongitude: number): void {
     this.maxX = maxLongitude;
@@ -199,8 +216,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the max latitude
    *
-   * @param maxLatitude
-   *            max latitude
+   * @param maxLatitude max latitude
    */
   public setMaxLatitude(maxLatitude: number): void {
     this.maxY = maxLatitude;
@@ -218,8 +234,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the western longitude
    *
-   * @param west
-   *            western longitude
+   * @param west western longitude
    */
   public setWest(west: number): void {
     this.setMinLongitude(west);
@@ -237,8 +252,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the southern latitude
    *
-   * @param south
-   *            southern latitude
+   * @param south southern latitude
    */
   public setSouth(south: number): void {
     this.setMinLatitude(south);
@@ -256,8 +270,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the eastern longitude
    *
-   * @param east
-   *            eastern longitude
+   * @param east eastern longitude
    */
   public setEast(east: number): void {
     this.setMaxLongitude(east);
@@ -275,8 +288,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the northern latitude
    *
-   * @param north
-   *            northern latitude
+   * @param north northern latitude
    */
   public setNorth(north: number): void {
     this.setMaxLatitude(north);
@@ -294,8 +306,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Set the unit
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    */
   public setUnit(unit: Unit): void {
     this.unit = unit;
@@ -304,8 +315,7 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Is in the provided unit type
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    * @return true if in the unit
    */
   public isUnit(unit: Unit): boolean {
@@ -318,7 +328,7 @@ export class Bounds extends GeometryEnvelope {
    * @return true if degrees
    */
   public isDegrees(): boolean {
-    return this.isUnit(Unit.DEGREE);
+    return this.isUnit(Unit.Degree);
   }
 
   /**
@@ -327,14 +337,13 @@ export class Bounds extends GeometryEnvelope {
    * @return true if meters
    */
   public isMeters(): boolean {
-    return this.isUnit(Unit.METER);
+    return this.isUnit(Unit.Meter);
   }
 
   /**
    * Convert to the unit
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    * @return bounds in units, same bounds if equal units
    */
   public toUnit(unit: Unit): Bounds {
@@ -355,7 +364,7 @@ export class Bounds extends GeometryEnvelope {
    * @return bounds in degrees, same bounds if already in degrees
    */
   public toDegrees(): Bounds {
-    return this.toUnit(Unit.DEGREE);
+    return this.toUnit(Unit.Degree);
   }
 
   /**
@@ -364,7 +373,7 @@ export class Bounds extends GeometryEnvelope {
    * @return bounds in meters, same bounds if already in meters
    */
   public toMeters(): Bounds {
-    return this.toUnit(Unit.METER);
+    return this.toUnit(Unit.Meter);
   }
 
   /**
@@ -383,7 +392,7 @@ export class Bounds extends GeometryEnvelope {
    */
   public getCentroidLatitude(): number {
     let centerLatitude: number;
-    if (this.unit === Unit.DEGREE) {
+    if (this.unit === Unit.Degree) {
       centerLatitude = this.getCentroid().getLatitude();
     } else {
       centerLatitude = super.getMidY();
@@ -396,7 +405,7 @@ export class Bounds extends GeometryEnvelope {
    */
   public getCentroid(): Point {
     let point: Point | undefined;
-    if (this.unit === Unit.DEGREE) {
+    if (this.unit === Unit.Degree) {
       point = this.toMeters().getCentroid().toDegrees();
     } else {
       point = Point.pointFromPoint(this.centroid, this.unit);
@@ -428,7 +437,11 @@ export class Bounds extends GeometryEnvelope {
    * @return southwest coordinate
    */
   public getSouthwest(): Point {
-    return Point.point(this.getMinLongitude(), this.getMinLatitude(), this.unit);
+    return Point.point(
+      this.getMinLongitude(),
+      this.getMinLatitude(),
+      this.unit,
+    );
   }
 
   /**
@@ -437,7 +450,11 @@ export class Bounds extends GeometryEnvelope {
    * @return northwest coordinate
    */
   public getNorthwest(): Point {
-    return Point.point(this.getMinLongitude(), this.getMaxLatitude(), this.unit);
+    return Point.point(
+      this.getMinLongitude(),
+      this.getMaxLatitude(),
+      this.unit,
+    );
   }
 
   /**
@@ -446,7 +463,11 @@ export class Bounds extends GeometryEnvelope {
    * @return southeast coordinate
    */
   public getSoutheast(): Point {
-    return Point.point(this.getMaxLongitude(), this.getMinLatitude(), this.unit);
+    return Point.point(
+      this.getMaxLongitude(),
+      this.getMinLatitude(),
+      this.unit,
+    );
   }
 
   /**
@@ -455,19 +476,28 @@ export class Bounds extends GeometryEnvelope {
    * @return northeast coordinate
    */
   public getNortheast(): Point {
-    return Point.point(this.getMaxLongitude(), this.getMaxLatitude(), this.unit);
+    return Point.point(
+      this.getMaxLongitude(),
+      this.getMaxLatitude(),
+      this.unit,
+    );
   }
 
   /**
    * Create a new bounds as the overlapping between this bounds and the
    * provided
    *
-   * @param bounds
-   *            bounds
+   * @param bounds bounds
    * @return overlap bounds
    */
   public overlap(bounds: Bounds): GeometryEnvelope {
-    const overlapEnvelope = super.overlap(bounds.toUnit(this.unit!) as GeometryEnvelope, true);
+    if (!this.unit) {
+      throw new Error("Unit is undefined");
+    }
+    const overlapEnvelope = super.overlap(
+      bounds.toUnit(this.unit) as GeometryEnvelope,
+      true,
+    );
     const unionOverlap = Bounds.boundsFromEnvelope(overlapEnvelope, this.unit);
 
     return unionOverlap;
@@ -476,12 +506,16 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Create a new bounds as the union between this bounds and the provided
    *
-   * @param bounds
-   *            bounds
+   * @param bounds bounds
    * @return union bounds
    */
   public union(bounds: Bounds): GeometryEnvelope {
-    const unionEnvelope = super.union(bounds.toUnit(this.unit!) as GeometryEnvelope);
+    if (!this.unit) {
+      throw new Error("Unit is undefined");
+    }
+    const unionEnvelope = super.union(
+      bounds.toUnit(this.unit) as GeometryEnvelope,
+    );
     const unionBounds = Bounds.boundsFromEnvelope(unionEnvelope, this.unit);
 
     return unionBounds;
@@ -527,16 +561,24 @@ export class Bounds extends GeometryEnvelope {
    * Convert the bounds to be precision accurate minimally containing the
    * bounds. Each bound is equal to or larger by the precision degree amount.
    *
-   * @param precision
-   *            precision in degrees
+   * @param precision precision in degrees
    * @return precision bounds
    */
   public toPrecision(precision: number): Bounds {
     const bounds = this.toDegrees();
 
-    const minLon = GridUtils.precisionBefore(bounds.getMinLongitude(), precision);
-    const minLat = GridUtils.precisionBefore(bounds.getMinLatitude(), precision);
-    const maxLon = GridUtils.precisionAfter(bounds.getMaxLongitude(), precision);
+    const minLon = GridUtils.precisionBefore(
+      bounds.getMinLongitude(),
+      precision,
+    );
+    const minLat = GridUtils.precisionBefore(
+      bounds.getMinLatitude(),
+      precision,
+    );
+    const maxLon = GridUtils.precisionAfter(
+      bounds.getMaxLongitude(),
+      precision,
+    );
     const maxLat = GridUtils.precisionAfter(bounds.getMaxLatitude(), precision);
 
     return Bounds.degrees(minLon, minLat, maxLon, maxLat);
@@ -545,29 +587,44 @@ export class Bounds extends GeometryEnvelope {
   /**
    * Get the pixel range where the bounds fit into the tile
    *
-   * @param tile
-   *            tile
+   * @param tile tile
    * @return pixel range
    */
   public getPixelRangeFromTile(tile: GridTile): PixelRange {
-    return this.getPixelRange(tile.getWidth(), tile.getHeight(), tile.getBounds()!);
+    const bounds = tile.getBounds();
+    if (!bounds) {
+      throw new Error("Bounds is undefined");
+    }
+
+    return this.getPixelRange(tile.getWidth(), tile.getHeight(), bounds);
   }
 
   /**
    * Get the pixel range where the bounds fit into the provided bounds
    *
-   * @param width
-   *            width
-   * @param height
-   *            height
-   * @param bounds
-   *            bounds
+   * @param width width
+   * @param height height
+   * @param bounds bounds
    * @return pixel range
    */
-  public getPixelRange(width: number, height: number, bounds: Bounds): PixelRange {
-    bounds = bounds.toMeters();
-    const topLeft = GridUtils.getPixel(width, height, bounds, this.getNorthwest());
-    const bottomRight = GridUtils.getPixel(width, height, bounds, this.getSoutheast());
+  public getPixelRange(
+    width: number,
+    height: number,
+    bounds: Bounds,
+  ): PixelRange {
+    const tempBounds = bounds.toMeters();
+    const topLeft = GridUtils.getPixel(
+      width,
+      height,
+      tempBounds,
+      this.getNorthwest(),
+    );
+    const bottomRight = GridUtils.getPixel(
+      width,
+      height,
+      tempBounds,
+      this.getSoutheast(),
+    );
     return new PixelRange(topLeft, bottomRight);
   }
 
@@ -604,10 +661,18 @@ export class Bounds extends GeometryEnvelope {
    * {@inheritDoc}
    */
   public equals(other: GeometryEnvelope): boolean {
-    if (this === other) return true;
-    if (!super.equals(other as GeometryEnvelope)) return false;
-    if (!(other instanceof Bounds)) return false;
-    if (this.unit !== other.unit) return false;
+    if (this === other) {
+      return true;
+    }
+    if (!super.equals(other as GeometryEnvelope)) {
+      return false;
+    }
+    if (!(other instanceof Bounds)) {
+      return false;
+    }
+    if (this.unit !== other.unit) {
+      return false;
+    }
     return true;
   }
 }

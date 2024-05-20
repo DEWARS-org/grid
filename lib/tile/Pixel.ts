@@ -15,10 +15,8 @@ export class Pixel {
   /**
    * Constructor
    *
-   * @param x
-   *            x pixel
-   * @param y
-   *            y pixel
+   * @param x x pixel
+   * @param y y pixel
    */
   public constructor(x: number, y: number) {
     this.x = x;
@@ -37,8 +35,7 @@ export class Pixel {
   /**
    * Set the x pixel
    *
-   * @param x
-   *            x pixel
+   * @param x x pixel
    */
   public setX(x: number): void {
     this.x = x;
@@ -56,8 +53,7 @@ export class Pixel {
   /**
    * Set the y pixel
    *
-   * @param y
-   *            y pixel
+   * @param y y pixel
    */
   public setY(y: number): void {
     this.y = y;

@@ -5,10 +5,10 @@ export enum Hemisphere {
   /**
    * Northern hemisphere
    */
-  NORTH,
+  North = 0,
 
   /**
    * Southern hemisphere
    */
-  SOUTH,
+  South = 1,
 }

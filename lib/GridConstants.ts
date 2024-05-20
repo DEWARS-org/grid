@@ -25,12 +25,12 @@ export class GridConstants {
   /**
    * Omitted band letter 'I'
    */
-  public static readonly BAND_LETTER_OMIT_I = 'I';
+  public static readonly BAND_LETTER_OMIT_I = "I";
 
   /**
    * Omitted band letter 'O'
    */
-  public static readonly BAND_LETTER_OMIT_O = 'O';
+  public static readonly BAND_LETTER_OMIT_O = "O";
 
   /**
    * Max map zoom level
@@ -40,20 +40,20 @@ export class GridConstants {
   /**
    * North single character as a string
    */
-  public static readonly NORTH_CHAR = 'N';
+  public static readonly NORTH_CHAR = "N";
 
   /**
    * South single character as a string
    */
-  public static readonly SOUTH_CHAR = 'S';
+  public static readonly SOUTH_CHAR = "S";
 
   /**
    * West single character as a string
    */
-  public static readonly WEST_CHAR = 'W';
+  public static readonly WEST_CHAR = "W";
 
   /**
    * East single character as a string
    */
-  public static readonly EAST_CHAR = 'E';
+  public static readonly EAST_CHAR = "E";
 }

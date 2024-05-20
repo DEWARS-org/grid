@@ -16,8 +16,12 @@ test.group("BaseGrid Tests", () => {
     expect(baseGrid.isWithin(baseGrid.getMinZoom())).toBe(true);
     expect(baseGrid.isWithin(baseGrid.getMinZoom() - 1)).toBe(false);
     baseGrid.setMaxZoom(2);
-    expect(baseGrid.isWithin(baseGrid.getMaxZoom())).toBe(true);
-    expect(baseGrid.isWithin(baseGrid.getMaxZoom() + 1)).toBe(false);
+    const maxZoom = baseGrid.getMaxZoom();
+    expect(maxZoom).not.toBeUndefined;
+    if (maxZoom) {
+      expect(baseGrid.isWithin(maxZoom)).toBe(true);
+      expect(baseGrid.isWithin(maxZoom + 1)).toBe(false);
+    }
 
     expect(baseGrid.isLinesWithin(0)).toBe(true);
 
@@ -25,8 +29,12 @@ test.group("BaseGrid Tests", () => {
     expect(baseGrid.isLinesWithin(baseGrid.getLinesMinZoom())).toBe(true);
     expect(baseGrid.isLinesWithin(baseGrid.getLinesMinZoom() - 1)).toBe(false);
     baseGrid.setLinesMaxZoom(10);
-    expect(baseGrid.isLinesWithin(baseGrid.getLinesMaxZoom())).toBe(true);
-    expect(baseGrid.isLinesWithin(baseGrid.getLinesMaxZoom() + 1)).toBe(false);
+    const linesMaxZoom = baseGrid.getLinesMaxZoom();
+    expect(linesMaxZoom).not.toBeUndefined;
+    if (linesMaxZoom) {
+      expect(baseGrid.isLinesWithin(linesMaxZoom)).toBe(true);
+      expect(baseGrid.isLinesWithin(linesMaxZoom + 1)).toBe(false);
+    }
   });
 
   test("test style", ({ expect }) => {

@@ -4,8 +4,8 @@ import { Unit } from "../../lib/features/Unit.js";
 
 test.group("Bounds Tests", () => {
   test("test construction", ({ expect }) => {
-    let bounds = Bounds.bounds(-180, -90, 180, 90, Unit.DEGREE);
-    expect(bounds.getUnit()).toEqual(Unit.DEGREE);
+    let bounds = Bounds.bounds(-180, -90, 180, 90, Unit.Degree);
+    expect(bounds.getUnit()).toEqual(Unit.Degree);
     let other = Bounds.degrees(
       bounds.getMinLongitude(),
       bounds.getMinLatitude(),
@@ -15,7 +15,7 @@ test.group("Bounds Tests", () => {
     expect(bounds.equals(other)).toBe(true);
 
     bounds = bounds.toMeters();
-    expect(bounds.getUnit()).toEqual(Unit.METER);
+    expect(bounds.getUnit()).toEqual(Unit.Meter);
     other = Bounds.meters(
       bounds.getMinLongitude(),
       bounds.getMinLatitude(),
@@ -35,10 +35,10 @@ test.group("Bounds Tests", () => {
   });
 
   test("test toUnit", ({ expect }) => {
-    const boundsDegree = Bounds.bounds(-180, -90, 180, 90, Unit.DEGREE);
+    const boundsDegree = Bounds.bounds(-180, -90, 180, 90, Unit.Degree);
 
-    let toUnit = boundsDegree.toUnit(Unit.METER);
-    toUnit = boundsDegree.toUnit(Unit.DEGREE);
+    let toUnit = boundsDegree.toUnit(Unit.Meter);
+    toUnit = boundsDegree.toUnit(Unit.Degree);
     expect(boundsDegree.equals(toUnit)).toBe(true);
   });
 });

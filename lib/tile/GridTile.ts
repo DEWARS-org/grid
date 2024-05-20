@@ -1,8 +1,8 @@
-import { Bounds } from '../features/Bounds';
-import { Point } from '../features/Point';
-import { Unit } from '../features/Unit';
-import { GridUtils } from '../GridUtils';
-import { Pixel } from './Pixel';
+import { GridUtils } from "../GridUtils.js";
+import type { Bounds } from "../features/Bounds.js";
+import type { Point } from "../features/Point.js";
+import { Unit } from "../features/Unit.js";
+import type { Pixel } from "./Pixel.js";
 
 /**
  * Grid Tile
@@ -11,17 +11,17 @@ export class GridTile {
   /**
    * Tile width
    */
-  private width: number = 0;
+  private width = 0;
 
   /**
    * Tile height
    */
-  private height: number = 0;
+  private height = 0;
 
   /**
    * Zoom level
    */
-  private zoom: number = 0;
+  private zoom = 0;
 
   /**
    * Bounds
@@ -31,19 +31,20 @@ export class GridTile {
   /**
    * Create a tile
    *
-   * @param width
-   *            tile width
-   * @param height
-   *            tile height
-   * @param x
-   *            x coordinate
-   * @param y
-   *            y coordinate
-   * @param zoom
-   *            zoom level
+   * @param width tile width
+   * @param height tile height
+   * @param x x coordinate
+   * @param y y coordinate
+   * @param zoom zoom level
    * @return tile
    */
-  public static tile(width: number, height: number, x: number, y: number, zoom: number): GridTile {
+  public static tile(
+    width: number,
+    height: number,
+    x: number,
+    y: number,
+    zoom: number,
+  ): GridTile {
     const tile = new GridTile();
     tile.width = width;
     tile.height = height;
@@ -55,15 +56,16 @@ export class GridTile {
   /**
    * Create a tile
    *
-   * @param width
-   *            tile width
-   * @param height
-   *            tile height
-   * @param bounds
-   *            tile bounds
+   * @param width tile width
+   * @param height tile height
+   * @param bounds tile bounds
    * @return tile
    */
-  public static tileWithBounds(width: number, height: number, bounds: Bounds): GridTile {
+  public static tileWithBounds(
+    width: number,
+    height: number,
+    bounds: Bounds,
+  ): GridTile {
     const tile = new GridTile();
     tile.width = width;
     tile.height = height;
@@ -102,14 +104,13 @@ export class GridTile {
   /**
    * Get the bounds in the optional units
    *
-   * @param unit
-   *            units
+   * @param unit units
    * @return bounds in units
    */
   public getBounds(unit?: Unit): Bounds | undefined {
     let tmpBounds = this.bounds;
     if (unit !== null && unit !== undefined && this.bounds) {
-      tmpBounds = this.bounds!.toUnit(unit);
+      tmpBounds = this.bounds.toUnit(unit);
     }
     return tmpBounds;
   }
@@ -120,7 +121,7 @@ export class GridTile {
    * @return bounds in degrees
    */
   public getBoundsDegrees(): Bounds | undefined {
-    return this.getBounds(Unit.DEGREE);
+    return this.getBounds(Unit.Degree);
   }
 
   /**
@@ -129,39 +130,45 @@ export class GridTile {
    * @return bounds in meters
    */
   public getBoundsMeters(): Bounds | undefined {
-    return this.getBounds(Unit.METER);
+    return this.getBounds(Unit.Meter);
   }
 
   /**
    * Get the point pixel location in the tile
    *
-   * @param point
-   *            point
+   * @param point point
    * @return pixel
    */
   public getPixel(point: Point): Pixel {
-    return GridUtils.getPixel(this.width, this.height, this.bounds!, point);
+    if (!this.bounds) {
+      throw new Error("Bounds is not set");
+    }
+    return GridUtils.getPixel(this.width, this.height, this.bounds, point);
   }
 
   /**
    * Get the longitude in meters x pixel location in the tile
    *
-   * @param longitude
-   *            longitude in meters
+   * @param longitude longitude in meters
    * @return x pixel
    */
-  public getXPixel(longitude: number): number {
-    return GridUtils.getXPixel(this.width, this.bounds!, longitude);
+  public getXpixel(longitude: number): number {
+    if (!this.bounds) {
+      throw new Error("Bounds is not set");
+    }
+    return GridUtils.getXPixel(this.width, this.bounds, longitude);
   }
 
   /**
    * Get the latitude (in meters) y pixel location in the tile
    *
-   * @param latitude
-   *            latitude in meters
+   * @param latitude latitude in meters
    * @return y pixel
    */
-  public getYPixel(latitude: number): number {
-    return GridUtils.getYPixel(this.height, this.bounds!, latitude);
+  public getYpixel(latitude: number): number {
+    if (!this.bounds) {
+      throw new Error("Bounds is not set");
+    }
+    return GridUtils.getYPixel(this.height, this.bounds, latitude);
   }
 }

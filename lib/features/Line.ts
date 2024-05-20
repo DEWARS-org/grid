@@ -1,7 +1,7 @@
-import { Line as MilLine, Point as MilPoint } from '@ngageoint/simple-features-js';
-import { GridUtils } from '../GridUtils';
-import { Point } from './Point';
-import { Unit } from './Unit';
+import { Line as MilLine } from "@ngageoint/simple-features-js";
+import { GridUtils } from "../GridUtils.js";
+import type { Point } from "./Point.js";
+import { Unit } from "./Unit.js";
 
 /**
  * Line between two points
@@ -10,10 +10,8 @@ export class Line extends MilLine {
   /**
    * Create a line
    *
-   * @param point1
-   *            first point
-   * @param point2
-   *            second point
+   * @param point1 first point
+   * @param point2 second point
    * @return line
    */
   public static line(point1: Point, point2: Point): Line {
@@ -34,8 +32,7 @@ export class Line extends MilLine {
   /**
    * Set the first point
    *
-   * @param point1
-   *            first point
+   * @param point1 first point
    */
   public setPoint1(point1: Point): void {
     this.setPoints(point1, this.getPoint2());
@@ -53,8 +50,7 @@ export class Line extends MilLine {
   /**
    * Set the second point
    *
-   * @param point2
-   *            second point
+   * @param point2 second point
    */
   public setPoint2(point2: Point): void {
     this.setPoints(this.getPoint1(), point2);
@@ -63,10 +59,8 @@ export class Line extends MilLine {
   /**
    * Set the points
    *
-   * @param point1
-   *            first point
-   * @param point2
-   *            second point
+   * @param point1 first point
+   * @param point2 second point
    */
   public setPoints(point1: Point, point2: Point): void {
     this.points = [point1, point2];
@@ -85,8 +79,7 @@ export class Line extends MilLine {
   /**
    * Is in the provided unit type
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    * @return true if in the unit
    */
   public isUnit(unit: Unit): boolean {
@@ -114,8 +107,7 @@ export class Line extends MilLine {
   /**
    * Convert to the unit
    *
-   * @param unit
-   *            unit
+   * @param unit unit
    * @return point in units, same point if equal units
    */
   public toUnit(unit: Unit): Line {
@@ -124,7 +116,10 @@ export class Line extends MilLine {
       line = this;
     } else {
       line = this.copy();
-      line.setPoints(this.getPoint1().toUnit(unit), this.getPoint2().toUnit(unit));
+      line.setPoints(
+        this.getPoint1().toUnit(unit),
+        this.getPoint2().toUnit(unit),
+      );
     }
     return line;
   }
@@ -135,7 +130,7 @@ export class Line extends MilLine {
    * @return line in degrees, same line if already in degrees
    */
   public toDegrees(): Line {
-    return this.toUnit(Unit.DEGREE);
+    return this.toUnit(Unit.Degree);
   }
 
   /**
@@ -144,14 +139,13 @@ export class Line extends MilLine {
    * @return line in meters, same line if already in meters
    */
   public toMeters(): Line {
-    return this.toUnit(Unit.METER);
+    return this.toUnit(Unit.Meter);
   }
 
   /**
    * Get the intersection between this line and the provided line
    *
-   * @param line
-   *            line
+   * @param line line
    * @return intersection
    */
   public intersection(line: Line): Point | undefined {
@@ -173,10 +167,7 @@ export class Line extends MilLine {
   private validateUnits(): void {
     if (!this.getPoint1().isUnit(this.getPoint2().getUnit())) {
       throw new Error(
-        'Points are in different units. point1: ' +
-          this.getPoint1().getUnit() +
-          ', point2: ' +
-          this.getPoint2().getUnit(),
+        `Points are in different units. point1: ${this.getPoint1().getUnit()}, point2: ${this.getPoint2().getUnit()}`,
       );
     }
   }

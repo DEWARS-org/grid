@@ -5,11 +5,13 @@ test.group("GridProperties Tests", () => {
   test("test getProperty", ({ expect }) => {
     const props = new TestProperties();
     const prop = props.getProperty(
-      true,
       props.buildProperty(["grid", "width"]),
+      true,
     );
     expect(prop).not.toBeNull;
-    expect(Number.parseInt(prop)).toBeCloseTo(2.0, 0.1);
+    if (prop) {
+      expect(Number.parseInt(prop)).toBeCloseTo(2.0, 0.1);
+    }
   });
 
   test("test getBooleanProperty", ({ expect }) => {
