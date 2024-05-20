@@ -1,26 +1,26 @@
-import { Line } from '../../lib/features/Line';
-import { Point } from '../../lib/features/Point';
-import { Unit } from '../../lib/features/Unit';
-import { expect } from 'chai';
+import { test } from "@japa/runner";
+import { Line } from "../../lib/features/Line.js";
+import { Point } from "../../lib/features/Point.js";
+import { Unit } from "../../lib/features/Unit.js";
 
-describe('Line Tests', function () {
-  it('test setPoints', function () {
+test.group("Line Tests", () => {
+  test("test setPoints", ({ expect }) => {
     const point1 = Point.degrees(0, 0);
     const point2 = Point.degrees(1, 1);
 
     const line = Line.line(point1, point2);
-    expect(line).to.not.be.undefined;
+    expect(line).not.toBeUndefined;
   });
 
-  it('test toMeters', function () {
+  test("test toMeters", ({ expect }) => {
     const point1 = Point.degrees(0, 0);
     const point2 = Point.degrees(1, 1);
 
     const line = Line.line(point1, point2);
-    expect(line).to.not.be.undefined;
+    expect(line).not.toBeUndefined;
 
     const metersLine = line.toMeters();
-    expect(metersLine.getPoint1().getUnit()).to.equal(Unit.METER);
-    expect(metersLine.getPoint2().getUnit()).to.equal(Unit.METER);
+    expect(metersLine.getPoint1().getUnit()).toEqual(Unit.METER);
+    expect(metersLine.getPoint2().getUnit()).toEqual(Unit.METER);
   });
 });

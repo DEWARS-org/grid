@@ -1,22 +1,22 @@
-import { expect } from 'chai';
-import { BaseZoomGrids } from '../lib/BaseZoomGrids';
-import { BaseGrid } from '../lib/BaseGrid';
+import { test } from "@japa/runner";
+import { BaseGrid } from "../lib/BaseGrid.js";
+import { BaseZoomGrids } from "../lib/BaseZoomGrids.js";
 
-describe('BaseZoomGrids Tests', function () {
+test.group("BaseZoomGrids Tests", () => {
   /**
    * Test the iterator
    */
-  it('test iterations', function () {
+  test("test iterations", ({ expect }) => {
     const zoomGrids = new BaseZoomGrids<BaseGrid>(5);
     zoomGrids.addGrid(new BaseGrid());
     zoomGrids.addGrid(new BaseGrid());
 
     let count = 0;
 
-    for (const grid of zoomGrids) {
+    for (const _ of zoomGrids) {
       count++;
     }
 
-    expect(count).to.equal(zoomGrids.numGrids());
+    expect(count).toEqual(zoomGrids.numGrids());
   });
 });

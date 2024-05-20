@@ -1,24 +1,24 @@
-import { expect } from 'chai';
-import { Hemisphere } from '../lib/Hemisphere';
-import { HemisphereUtils } from '../lib/HemisphereUtils';
-import { Point } from '../lib/features/Point';
+import { test } from "@japa/runner";
+import { Hemisphere } from "../lib/Hemisphere.js";
+import { HemisphereUtils } from "../lib/HemisphereUtils.js";
+import { Point } from "../lib/features/Point.js";
 
-describe('HemisphereUtils Tests', function () {
-  it('test fromLatitude', function () {
+test.group("HemisphereUtils Tests", () => {
+  test("test fromLatitude", ({ expect }) => {
     let hemisphere = HemisphereUtils.fromLatitude(80);
-    expect(hemisphere).to.equal(Hemisphere.NORTH);
+    expect(hemisphere).toEqual(Hemisphere.NORTH);
 
     hemisphere = HemisphereUtils.fromLatitude(-80);
-    expect(hemisphere).to.equal(Hemisphere.SOUTH);
+    expect(hemisphere).toEqual(Hemisphere.SOUTH);
   });
 
-  it('test from', function () {
+  test("test from", ({ expect }) => {
     let point = Point.degrees(0, 80);
     let hemisphere = HemisphereUtils.from(point);
-    expect(hemisphere).to.equal(Hemisphere.NORTH);
+    expect(hemisphere).toEqual(Hemisphere.NORTH);
 
     point = Point.degrees(0, -80);
     hemisphere = HemisphereUtils.from(point);
-    expect(hemisphere).to.equal(Hemisphere.SOUTH);
+    expect(hemisphere).toEqual(Hemisphere.SOUTH);
   });
 });

@@ -1,25 +1,34 @@
-import { expect } from 'chai';
-import { TestProperties } from './TestProperties';
+import { test } from "@japa/runner";
+import { TestProperties } from "./TestProperties.js";
 
-describe('GridProperties Tests', function () {
-  it('test getProperty', function () {
+test.group("GridProperties Tests", () => {
+  test("test getProperty", ({ expect }) => {
     const props = new TestProperties();
-    const prop = props.getProperty(true, props.buildProperty(['grid', 'width']));
-    expect(prop).to.not.be.null;
-    expect(Number.parseInt(prop!)).to.be.approximately(2.0, 0.1);
+    const prop = props.getProperty(
+      true,
+      props.buildProperty(["grid", "width"]),
+    );
+    expect(prop).not.toBeNull;
+    expect(Number.parseInt(prop)).toBeCloseTo(2.0, 0.1);
   });
 
-  it('test getBooleanProperty', function () {
+  test("test getBooleanProperty", ({ expect }) => {
     const props = new TestProperties();
-    const prop = props.getBooleanProperty(true, props.buildProperty(['test1', 'propagate']));
-    expect(prop).to.not.be.null;
-    expect(prop).to.be.true;
+    const prop = props.getBooleanProperty(
+      true,
+      props.buildProperty(["test1", "propagate"]),
+    );
+    expect(prop).not.toBeNull;
+    expect(prop).toBe(true);
   });
 
-  it('test getFloatProperty', function () {
+  test("test getFloatProperty", ({ expect }) => {
     const props = new TestProperties();
-    const prop = props.getFloatProperty(true, props.buildProperty(['test2', 'buffer']));
-    expect(prop).to.not.be.null;
-    expect(prop).to.be.approximately(0.05, 0.01);
+    const prop = props.getFloatProperty(
+      true,
+      props.buildProperty(["test2", "buffer"]),
+    );
+    expect(prop).not.toBeNull;
+    expect(prop).toBeCloseTo(0.05, 0.01);
   });
 });

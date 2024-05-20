@@ -1,22 +1,21 @@
-import { expect } from 'chai';
-import { Labeler } from '../lib/Labeler';
-import { TestLabeler } from './TestLabeler';
+import { test } from "@japa/runner";
+import { TestLabeler } from "./TestLabeler.js";
 
-describe('Labeler Tests', function () {
-  it('test zoom', function () {
+test.group("Labeler Tests", () => {
+  test("test zoom", ({ expect }) => {
     const labeler = new TestLabeler(true, 0, undefined, undefined, 12, 0.3);
-    expect(labeler.hasMaxZoom()).to.be.false;
-    expect(labeler.isWithin(labeler.getMinZoom())).to.be.true;
+    expect(labeler.hasMaxZoom()).toBe(false);
+    expect(labeler.isWithin(labeler.getMinZoom())).toBe(true);
 
     labeler.setMaxZoom(10);
-    expect(labeler.hasMaxZoom()).to.be.true;
-    expect(labeler.isWithin(labeler.getMinZoom())).to.be.true;
+    expect(labeler.hasMaxZoom()).toBe(true);
+    expect(labeler.isWithin(labeler.getMinZoom())).toBe(true);
   });
 
-  it('test buffer', function () {
+  test("test buffer", ({ expect }) => {
     const labeler = new TestLabeler(true, 0, undefined, undefined, 12, 0.3);
-    expect(function () {
+    expect(() => {
       labeler.setBuffer(-1);
-    }).to.throw(Error);
+    }).toThrow(Error);
   });
 });
