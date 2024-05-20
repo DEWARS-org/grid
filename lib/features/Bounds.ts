@@ -108,8 +108,7 @@ export class Bounds extends GeometryEnvelope {
     bounds.unit = southwest.getUnit();
 
     const northeastUnit = northeast.getUnit();
-
-    if (!northeastUnit) {
+    if (northeastUnit === undefined) {
       throw new Error("Northeast unit is undefined");
     }
 
@@ -491,7 +490,7 @@ export class Bounds extends GeometryEnvelope {
    * @return overlap bounds
    */
   public overlap(bounds: Bounds): GeometryEnvelope {
-    if (!this.unit) {
+    if (this.unit === undefined) {
       throw new Error("Unit is undefined");
     }
     const overlapEnvelope = super.overlap(
@@ -510,7 +509,7 @@ export class Bounds extends GeometryEnvelope {
    * @return union bounds
    */
   public union(bounds: Bounds): GeometryEnvelope {
-    if (!this.unit) {
+    if (this.unit === undefined) {
       throw new Error("Unit is undefined");
     }
     const unionEnvelope = super.union(

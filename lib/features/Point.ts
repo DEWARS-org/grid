@@ -217,6 +217,9 @@ export class Point extends MilPoint {
     if (this.isUnit(unit)) {
       newPoint = this;
     } else {
+      if (this.unit === undefined) {
+        throw new Error("Unit is not set");
+      }
       newPoint = GridUtils.toUnit(
         this.unit,
         this.getLongitude(),

@@ -152,7 +152,7 @@ export class GridUtils {
    * @return point in unit
    */
   public static toUnit(
-    fromUnit: Unit | undefined,
+    fromUnit: Unit,
     longitude: number,
     latitude: number,
     toUnit: Unit,
@@ -282,7 +282,7 @@ export class GridUtils {
 
     if (point !== null && point !== undefined) {
       const unit = line1Point1.getUnit();
-      if (!unit) {
+      if (unit === undefined) {
         throw new Error("Unit is not set");
       }
       intersection = Point.pointFromPoint(point, Unit.Meter).toUnit(unit);
