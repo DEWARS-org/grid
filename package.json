@@ -35,6 +35,7 @@
         "tstl": "^3.0.0"
     },
     "devDependencies": {
+        "@biomejs/biome": "^1.7.3",
         "@tsconfig/recommended": "^1.0.6",
         "@types/chai": "^4.3.16",
         "@types/mocha": "10.0.6",
@@ -42,10 +43,7 @@
         "coveralls": "3.1.1",
         "mocha": "^10.4.0",
         "nyc": "^15.1.0",
-        "prettier": "^3.2.5",
         "ts-node": "^10.9.2",
-        "tslint": "^6.1.3",
-        "tslint-config-prettier": "^1.18.0",
         "typedoc": "^0.25.13",
         "typescript": "^5.4.5"
     },
@@ -60,10 +58,6 @@
         "build": "npm run compile",
         "report": "nyc report",
         "coverage": "nyc npm run test:run",
-        "lint:prettier": "prettier --check \"lib/**/*.ts\" \"test/**/*.ts\"",
-        "lint:tslint": "tslint -p tsconfig.json",
-        "lint": "npm run lint:tslint && npm run lint:prettier",
-        "fix:prettier": "prettier --write \"lib/**/*.ts\" \"test/**/*.ts\"",
         "prebuild": "npm run clean",
         "pretest": "npm run build",
         "prepublishOnly": "npm run build && npm run lint"
