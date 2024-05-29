@@ -1,6 +1,5 @@
-import _ from "lodash";
 import gridConfig from "../../resources/grid.json";
-import { PropertyConstants } from "./PropertyConstants.js";
+import { PropertyConstants } from "./PropertyConstants.ts";
 
 /**
  * Grid property loader
@@ -20,10 +19,15 @@ export abstract class GridProperties {
    * @return value
    */
   public getProperty(key: string, required = false): string | undefined {
-    let value: string | undefined = _.get(this.extraConfig, key);
+    const paths = key.split(".");
+    const extractValue = (config: any) => {
+      return paths.reduce((acc, path) => acc?.[path], config);
+    };
+
+    let value: string | undefined = extractValue(this.extraConfig);
 
     if (!value) {
-      value = _.get(gridConfig, key);
+      value = extractValue(gridConfig);
     }
 
     if (value) {

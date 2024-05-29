@@ -1,12 +1,12 @@
-import { Color } from "@ngageoint/color-js";
+import { Color } from "@dewars/color";
 import { TreeMap } from "tstl";
-import type { BaseGrid } from "./BaseGrid.js";
-import type { BaseZoomGrids } from "./BaseZoomGrids.js";
-import { GridConstants } from "./GridConstants.js";
-import { GridStyle } from "./GridStyle.js";
-import type { Labeler } from "./Labeler.js";
-import type { GridProperties } from "./property/GridProperties.js";
-import { PropertyConstants } from "./property/PropertyConstants.js";
+import type { BaseGrid } from "./BaseGrid.ts";
+import type { BaseZoomGrids } from "./BaseZoomGrids.ts";
+import { GridConstants } from "./GridConstants.ts";
+import { GridStyle } from "./GridStyle.ts";
+import type { Labeler } from "./Labeler.ts";
+import type { GridProperties } from "./property/GridProperties.ts";
+import { PropertyConstants } from "./property/PropertyConstants.ts";
 
 /**
  * Grids
@@ -128,8 +128,9 @@ export abstract class BaseGrids<
         PropertyConstants.COLOR,
       ]),
     );
-    const color =
-      colorProperty != null ? Color.color(colorProperty) : Color.black();
+    const color = colorProperty != null
+      ? Color.color(colorProperty)
+      : Color.black();
     grid.setColor(color);
 
     let width = this.properties.getDoubleProperty(
@@ -450,10 +451,9 @@ export abstract class BaseGrids<
 
     const tempMinZoom = Math.max(minZoom, allGridsMin);
 
-    const tempMaxZoom =
-      maxZoom === null || maxZoom === undefined
-        ? allGridsMax
-        : Math.min(maxZoom, allGridsMax);
+    const tempMaxZoom = maxZoom === null || maxZoom === undefined
+      ? allGridsMax
+      : Math.min(maxZoom, allGridsMax);
 
     const minOverlap = Math.max(tempMinZoom, gridMinZoom);
     const maxOverlap = Math.min(tempMaxZoom, gridMaxZoom);

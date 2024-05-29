@@ -1,6 +1,6 @@
-import type { Color } from "@ngageoint/color-js/";
-import { GridStyle } from "./GridStyle.js";
-import type { Labeler } from "./Labeler.js";
+import type { Color } from "@dewars/color";
+import { GridStyle } from "./GridStyle.ts";
+import type { Labeler } from "./Labeler.ts";
 
 /**
  * Base Grid

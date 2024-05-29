@@ -1,7 +1,7 @@
-import { Line as MilLine } from "@ngageoint/simple-features-js";
-import { GridUtils } from "../GridUtils.js";
-import type { Point } from "./Point.js";
-import { Unit } from "./Unit.js";
+import { Line as MilLine } from "@dewars/simple-features";
+import { GridUtils } from "../GridUtils.ts";
+import type { Point } from "./Point.ts";
+import { Unit } from "./Unit.ts";
 
 /**
  * Line between two points
@@ -15,7 +15,7 @@ export class Line extends MilLine {
    * @return line
    */
   public static line(point1: Point, point2: Point): Line {
-    const line = new Line();
+    const line = Line.create();
     line.setPoints(point1, point2);
     return line;
   }
@@ -158,7 +158,7 @@ export class Line extends MilLine {
    * @return line copy
    */
   public copy(): Line {
-    return new Line(this);
+    return this.copy();
   }
 
   /**

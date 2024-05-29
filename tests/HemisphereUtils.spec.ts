@@ -1,24 +1,22 @@
-import { test } from "@japa/runner";
-import { Hemisphere } from "../lib/Hemisphere.js";
-import { HemisphereUtils } from "../lib/HemisphereUtils.js";
-import { Point } from "../lib/features/Point.js";
+import { Hemisphere } from "../lib/Hemisphere.ts";
+import { HemisphereUtils } from "../lib/HemisphereUtils.ts";
+import { Point } from "../lib/features/Point.ts";
+import { expect } from "@std/expect";
 
-test.group("HemisphereUtils Tests", () => {
-  test("test fromLatitude", ({ expect }) => {
-    let hemisphere = HemisphereUtils.fromLatitude(80);
-    expect(hemisphere).toEqual(Hemisphere.North);
+Deno.test("test fromLatitude", () => {
+  let hemisphere = HemisphereUtils.fromLatitude(80);
+  expect(hemisphere).toEqual(Hemisphere.North);
 
-    hemisphere = HemisphereUtils.fromLatitude(-80);
-    expect(hemisphere).toEqual(Hemisphere.South);
-  });
+  hemisphere = HemisphereUtils.fromLatitude(-80);
+  expect(hemisphere).toEqual(Hemisphere.South);
+});
 
-  test("test from", ({ expect }) => {
-    let point = Point.degrees(0, 80);
-    let hemisphere = HemisphereUtils.from(point);
-    expect(hemisphere).toEqual(Hemisphere.North);
+Deno.test("test from", () => {
+  let point = Point.degrees(0, 80);
+  let hemisphere = HemisphereUtils.from(point);
+  expect(hemisphere).toEqual(Hemisphere.North);
 
-    point = Point.degrees(0, -80);
-    hemisphere = HemisphereUtils.from(point);
-    expect(hemisphere).toEqual(Hemisphere.South);
-  });
+  point = Point.degrees(0, -80);
+  hemisphere = HemisphereUtils.from(point);
+  expect(hemisphere).toEqual(Hemisphere.South);
 });

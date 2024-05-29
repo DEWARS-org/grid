@@ -1,5 +1,5 @@
-import { Hemisphere } from "./Hemisphere.js";
-import type { Point } from "./features/Point.js";
+import { Hemisphere } from "./Hemisphere.ts";
+import type { Point } from "./features/Point.ts";
 
 /**
  * Helper functions for Hemisphere
@@ -10,8 +10,7 @@ export class HemisphereUtils {
   /**
    * Get the hemisphere for the latitude
    *
-   * @param latitude
-   *            latitude
+   * @param latitude latitude
    * @return hemisphere
    */
   public static fromLatitude(latitude: number): Hemisphere {
@@ -21,8 +20,7 @@ export class HemisphereUtils {
   /**
    * Get the hemisphere for the point
    *
-   * @param point
-   *            point
+   * @param point point
    * @return hemisphere
    */
   public static from(point: Point): Hemisphere {

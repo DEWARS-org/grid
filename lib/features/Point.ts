@@ -1,9 +1,9 @@
-import { Point as MilPoint } from "@ngageoint/simple-features-js";
-import { GridUtils } from "../GridUtils.js";
-import type { GridTile } from "../tile/GridTile.js";
-import type { Pixel } from "../tile/Pixel.js";
-import type { Bounds } from "./Bounds.js";
-import { Unit } from "./Unit.js";
+import { Point as MilPoint } from "@dewars/simple-features";
+import { GridUtils } from "../GridUtils.ts";
+import type { GridTile } from "../tile/GridTile.ts";
+import type { Pixel } from "../tile/Pixel.ts";
+import type { Bounds } from "./Bounds.ts";
+import { Unit } from "./Unit.ts";
 
 /**
  * Point
@@ -25,7 +25,7 @@ export class Point extends MilPoint {
   public static point(longitude: number, latitude: number, unit?: Unit): Point {
     let point: Point;
     if (unit !== undefined) {
-      point = new Point(longitude, latitude);
+      point = Point.createFromXY(longitude, latitude);
       point.unit = unit;
     } else {
       point = Point.degrees(longitude, latitude);
@@ -119,7 +119,7 @@ export class Point extends MilPoint {
    * @return point
    */
   public static pointFromPoint(point: MilPoint, unit?: Unit): Point {
-    const newPoint = new Point(point);
+    const newPoint = point.copy();
     newPoint.unit = unit;
     return newPoint;
   }
@@ -280,7 +280,7 @@ export class Point extends MilPoint {
    * @return point copy
    */
   public copy(): Point {
-    const copy = new Point(this);
+    const copy = this.copy();
     copy.unit = this.unit;
     return copy;
   }

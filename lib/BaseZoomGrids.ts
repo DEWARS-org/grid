@@ -1,5 +1,5 @@
 import { TreeSet } from "tstl";
-import type { BaseGrid } from "./BaseGrid.js";
+import type { BaseGrid } from "./BaseGrid.ts";
 
 /**
  * Zoom Level Matching Grids

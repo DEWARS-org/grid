@@ -1,10 +1,10 @@
-import { GeometryEnvelope } from "@ngageoint/simple-features-js";
-import { GridUtils } from "../GridUtils.js";
-import type { GridTile } from "../tile/GridTile.js";
-import { PixelRange } from "../tile/PixelRange.js";
-import { Line } from "./Line.js";
-import { Point } from "./Point.js";
-import { Unit } from "./Unit.js";
+import { GeometryEnvelope } from "@dewars/simple-features";
+import { GridUtils } from "../GridUtils.ts";
+import type { GridTile } from "../tile/GridTile.ts";
+import { PixelRange } from "../tile/PixelRange.ts";
+import { Line } from "./Line.ts";
+import { Point } from "./Point.ts";
+import { Unit } from "./Unit.ts";
 
 /**
  * Grid Bounds
@@ -32,7 +32,7 @@ export class Bounds extends GeometryEnvelope {
     maxLatitude: number,
     unit: Unit,
   ): Bounds {
-    const bounds = new Bounds(
+    const bounds = Bounds.createFromMinMaxXY(
       minLongitude,
       minLatitude,
       maxLongitude,
@@ -98,7 +98,7 @@ export class Bounds extends GeometryEnvelope {
    * @return bounds
    */
   public static boundsFromCorners(southwest: Point, northeast: Point): Bounds {
-    const bounds = new Bounds(
+    const bounds = Bounds.createFromMinMaxXY(
       southwest.getLongitude(),
       southwest.getLatitude(),
       northeast.getLongitude(),
@@ -114,9 +114,7 @@ export class Bounds extends GeometryEnvelope {
 
     if (!bounds.isUnit(northeastUnit)) {
       throw new Error(
-        `Points are in different units. southwest: ${
-          bounds.unit
-        }, northeast: ${northeast.getUnit()}`,
+        `Points are in different units. southwest: ${bounds.unit}, northeast: ${northeast.getUnit()}`,
       );
     }
 
@@ -144,7 +142,7 @@ export class Bounds extends GeometryEnvelope {
     envelope: GeometryEnvelope,
     unit?: Unit,
   ): Bounds {
-    const bounds = new Bounds(envelope);
+    const bounds = Bounds.boundsFromEnvelope(envelope);
     bounds.unit = unit;
     return bounds;
   }

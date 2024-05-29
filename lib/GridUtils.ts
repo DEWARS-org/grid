@@ -1,14 +1,11 @@
-import type { Point as MilPoint } from "@ngageoint/simple-features-js";
-import {
-  GeometryConstants,
-  GeometryUtils,
-} from "@ngageoint/simple-features-js";
-import { GridConstants } from "./GridConstants.js";
-import { Bounds } from "./features/Bounds.js";
-import type { Line } from "./features/Line.js";
-import { Point } from "./features/Point.js";
-import { Unit } from "./features/Unit.js";
-import { Pixel } from "./tile/Pixel.js";
+import type { Point as MilPoint } from "@dewars/simple-features";
+import { GeometryConstants, GeometryUtils } from "@dewars/simple-features";
+import { GridConstants } from "./GridConstants.ts";
+import { Bounds } from "./features/Bounds.ts";
+import type { Line } from "./features/Line.ts";
+import { Point } from "./features/Point.ts";
+import { Unit } from "./features/Unit.ts";
+import { Pixel } from "./tile/Pixel.ts";
 
 /**
  * Grid utilities
@@ -52,8 +49,8 @@ export class GridUtils {
   ): number {
     const tempBounds = bounds.toMeters();
 
-    const boxWidth =
-      tempBounds.getMaxLongitude() - tempBounds.getMinLongitude();
+    const boxWidth = tempBounds.getMaxLongitude() -
+      tempBounds.getMinLongitude();
     const offset = longitude - tempBounds.getMinLongitude();
     const percentage = offset / boxWidth;
     const pixel = percentage * width;
@@ -96,14 +93,14 @@ export class GridUtils {
     const tilesPerSide = GridUtils.tilesPerSide(zoom);
     const tileSize = GridUtils.tileSize(tilesPerSide);
 
-    const minLon =
-      -1 * GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH + x * tileSize;
-    const minLat =
-      GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH - (y + 1) * tileSize;
-    const maxLon =
-      -1 * GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH + (x + 1) * tileSize;
-    const maxLat =
-      GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH - y * tileSize;
+    const minLon = -1 * GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH +
+      x * tileSize;
+    const minLat = GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH -
+      (y + 1) * tileSize;
+    const maxLon = -1 * GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH +
+      (x + 1) * tileSize;
+    const maxLat = GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH -
+      y * tileSize;
 
     return Bounds.meters(minLon, minLat, maxLon, maxLat);
   }
@@ -137,8 +134,8 @@ export class GridUtils {
   public static getZoomLevel(bounds: Bounds): number {
     const tempBounds = bounds.toMeters();
     const tileSize = Math.min(tempBounds.getWidth(), tempBounds.getHeight());
-    const tilesPerSide =
-      (2 * GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH) / tileSize;
+    const tilesPerSide = (2 * GeometryConstants.WEB_MERCATOR_HALF_WORLD_WIDTH) /
+      tileSize;
     return Math.log(tilesPerSide) / Math.log(2);
   }
 
@@ -273,19 +270,21 @@ export class GridUtils {
   ): Point | undefined {
     let intersection: Point | undefined;
 
-    const point: MilPoint = GeometryUtils.intersection(
+    const intersectionPoint = GeometryUtils.intersection(
       line1Point1.toMeters(),
       line1Point2.toMeters(),
       line2Point1.toMeters(),
       line2Point2.toMeters(),
     );
 
-    if (point !== null && point !== undefined) {
+    if (intersectionPoint !== undefined) {
       const unit = line1Point1.getUnit();
       if (unit === undefined) {
         throw new Error("Unit is not set");
       }
-      intersection = Point.pointFromPoint(point, Unit.Meter).toUnit(unit);
+      intersection = Point.pointFromPoint(intersectionPoint, Unit.Meter).toUnit(
+        unit,
+      );
     }
 
     return intersection;

@@ -1,8 +1,8 @@
-import { GridUtils } from "../GridUtils.js";
-import type { Bounds } from "../features/Bounds.js";
-import type { Point } from "../features/Point.js";
-import { Unit } from "../features/Unit.js";
-import type { Pixel } from "./Pixel.js";
+import { GridUtils } from "../GridUtils.ts";
+import type { Bounds } from "../features/Bounds.ts";
+import type { Point } from "../features/Point.ts";
+import { Unit } from "../features/Unit.ts";
+import type { Pixel } from "./Pixel.ts";
 
 /**
  * Grid Tile

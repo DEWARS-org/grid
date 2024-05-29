@@ -1,4 +1,4 @@
-import type { Color } from "@ngageoint/color-js/";
+import type { Color } from "@dewars/color";
 
 /**
  * Grid Labeler

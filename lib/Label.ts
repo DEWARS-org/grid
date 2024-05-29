@@ -1,5 +1,5 @@
-import type { Bounds } from "./features/Bounds.js";
-import type { Point } from "./features/Point.js";
+import type { Bounds } from "./features/Bounds.ts";
+import type { Point } from "./features/Point.ts";
 
 /**
  * Grid Label

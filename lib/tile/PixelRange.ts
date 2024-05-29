@@ -1,4 +1,4 @@
-import type { Pixel } from "./Pixel.js";
+import type { Pixel } from "./Pixel.ts";
 
 /**
  * Pixel Range
