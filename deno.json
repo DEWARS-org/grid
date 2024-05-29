@@ -2,6 +2,9 @@
   "name": "@dewars/grid",
   "version": "1.0.0",
   "description": "Grid system using OGC Simple Features",
+  "exports": {
+    ".": "./mod.ts"
+  },
   "imports": {
     "@dewars/color": "jsr:@dewars/color@^1.0.0",
     "@dewars/simple-features": "jsr:@dewars/simple-features@^1.0.0",
