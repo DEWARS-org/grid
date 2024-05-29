@@ -16,6 +16,28 @@ export class Bounds extends GeometryEnvelope {
   private unit?: Unit = Unit.Degree;
 
   /**
+   * Create a geometry envelope
+   * @param minX min x
+   * @param minY min y
+   * @param maxX max x
+   * @param maxY max y
+   * @returns geometry envelope
+   */
+  public static createFromMinMaxXY(
+    minX: number,
+    minY: number,
+    maxX: number,
+    maxY: number,
+  ): Bounds {
+    const envelope = new Bounds();
+    envelope.minX = minX;
+    envelope.maxX = maxX;
+    envelope.minY = minY;
+    envelope.maxY = maxY;
+    return envelope;
+  }
+
+  /**
    * Create bounds
    *
    * @param minLongitude min longitude

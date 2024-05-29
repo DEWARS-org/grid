@@ -1,4 +1,4 @@
-import { Line as MilLine } from "@dewars/simple-features";
+import { GeometryType, Line as MilLine } from "@dewars/simple-features";
 import { GridUtils } from "../GridUtils.ts";
 import type { Point } from "./Point.ts";
 import { Unit } from "./Unit.ts";
@@ -7,6 +7,13 @@ import { Unit } from "./Unit.ts";
  * Line between two points
  */
 export class Line extends MilLine {
+  public static create(
+    hasZ?: boolean,
+    hasM?: boolean,
+  ): Line {
+    return new Line(GeometryType.LineString, hasZ, hasM);
+  }
+
   /**
    * Create a line
    *

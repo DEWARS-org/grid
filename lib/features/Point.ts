@@ -1,4 +1,4 @@
-import { Point as MilPoint } from "@dewars/simple-features";
+import { GeometryType, Point as MilPoint } from "@dewars/simple-features";
 import { GridUtils } from "../GridUtils.ts";
 import type { GridTile } from "../tile/GridTile.ts";
 import type { Pixel } from "../tile/Pixel.ts";
@@ -14,6 +14,13 @@ export class Point extends MilPoint {
    */
   private unit?: Unit = Unit.Degree;
 
+  public static create(
+    hasZ?: boolean,
+    hasM?: boolean,
+  ): Point {
+    return new Point(GeometryType.Point, hasZ, hasM);
+  }
+
   /**
    * Create a point
    *
@@ -25,7 +32,9 @@ export class Point extends MilPoint {
   public static point(longitude: number, latitude: number, unit?: Unit): Point {
     let point: Point;
     if (unit !== undefined) {
-      point = Point.createFromXY(longitude, latitude);
+      point = Point.create();
+      point.setLatitude(latitude);
+      point.setLongitude(longitude);
       point.unit = unit;
     } else {
       point = Point.degrees(longitude, latitude);
@@ -119,7 +128,11 @@ export class Point extends MilPoint {
    * @return point
    */
   public static pointFromPoint(point: MilPoint, unit?: Unit): Point {
-    const newPoint = point.copy();
+    const newPoint = Point.create();
+    newPoint.x = point.x;
+    newPoint.y = point.y;
+    newPoint.z = point.z;
+    newPoint.m = point.m;
     newPoint.unit = unit;
     return newPoint;
   }
@@ -272,17 +285,6 @@ export class Point extends MilPoint {
    */
   public getPixel(width: number, height: number, bounds: Bounds): Pixel {
     return GridUtils.getPixel(width, height, bounds, this);
-  }
-
-  /**
-   * Copy the point
-   *
-   * @return point copy
-   */
-  public copy(): Point {
-    const copy = this.copy();
-    copy.unit = this.unit;
-    return copy;
   }
 
   /**
