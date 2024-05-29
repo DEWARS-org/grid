@@ -1,5 +1,5 @@
 import { GridProperties } from "../../lib/property/GridProperties.ts";
-import * as config from "./test.json";
+import config from "./test.json" with { type: "json" };
 
 export class TestProperties extends GridProperties {
   constructor() {

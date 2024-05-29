@@ -1,4 +1,4 @@
-import gridConfig from "../../resources/grid.json";
+import gridConfig from "../../resources/grid.json" with { type: "json" };
 import { PropertyConstants } from "./PropertyConstants.ts";
 
 /**
