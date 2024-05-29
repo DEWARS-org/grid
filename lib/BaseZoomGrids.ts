@@ -15,7 +15,7 @@ export class BaseZoomGrids<T extends BaseGrid> implements IterableIterator<T> {
   /**
    * Grids
    */
-  protected readonly grids = new TreeSet<T>();
+  protected readonly grids: TreeSet<T> = new TreeSet<T>();
 
   private beginIterator: TreeSet.Iterator<T>;
 

@@ -15,7 +15,7 @@ export * from "./lib/BaseGrids.ts";
 export * from "./lib/BaseZoomGrids.ts";
 export * from "./lib/GridConstants.ts";
 export * from "./lib/GridStyle.ts";
-export * from ".//lib/GridUtils.ts";
+export * from "./lib/GridUtils.ts";
 export * from "./lib/Hemisphere.ts";
 export * from "./lib/HemisphereUtils.ts";
 export * from "./lib/Label.ts";
