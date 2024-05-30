@@ -2,7 +2,7 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "jsr:@dewars/color@^1.0.0": "jsr:@dewars/color@1.0.0",
+      "jsr:@dewars/color@^1.0.2": "jsr:@dewars/color@1.0.2",
       "jsr:@dewars/simple-features@^1.0.0": "jsr:@dewars/simple-features@1.0.0",
       "jsr:@std/assert@^0.225.3": "jsr:@std/assert@0.225.3",
       "jsr:@std/expect@^0.224.2": "jsr:@std/expect@0.224.2",
@@ -12,8 +12,8 @@
       "npm:tstl@^3.0.0": "npm:tstl@3.0.0"
     },
     "jsr": {
-      "@dewars/color@1.0.0": {
-        "integrity": "bf810f71f3030af6458a430cf84cc37569b8c19261844514b1a37a2647f6601c"
+      "@dewars/color@1.0.2": {
+        "integrity": "175531c8791e2e340d08671b545c3d82ef91a882b4c62fad82a8cc1ee2e7223c"
       },
       "@dewars/simple-features@1.0.0": {
         "integrity": "2a099355e6174b44987c7818e8f6281319c24e3029b61183eca43208de27927c",
@@ -63,7 +63,7 @@
   "remote": {},
   "workspace": {
     "dependencies": [
-      "jsr:@dewars/color@^1.0.0",
+      "jsr:@dewars/color@^1.0.2",
       "jsr:@dewars/simple-features@^1.0.0",
       "jsr:@std/expect@^0.224.2",
       "npm:tstl@^3.0.0"

@@ -1,14 +1,26 @@
 {
   "name": "@dewars/grid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Grid system using OGC Simple Features",
   "exports": {
     ".": "./mod.ts"
   },
   "imports": {
-    "@dewars/color": "jsr:@dewars/color@^1.0.0",
+    "@dewars/color": "jsr:@dewars/color@^1.0.2",
     "@dewars/simple-features": "jsr:@dewars/simple-features@^1.0.0",
     "@std/expect": "jsr:@std/expect@^0.224.2",
     "tstl": "npm:tstl@^3.0.0"
+  },
+  "publish": {
+    "exclude": [
+      ".github",
+      ".vscode",
+      "tests"
+    ]
+  },
+  "test": {
+    "include": [
+      "test/*.spec.ts"
+    ]
   }
 }
